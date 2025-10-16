@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="logo.png" alt="dotAIslash Logo" width="120" />
+
 # 📐 VERSA Schemas
 
 ### JSON Schema Definitions for the `.ai/` Folder Standard
