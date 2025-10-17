@@ -2,14 +2,14 @@
 // What: Export JSON Schema definitions as typed constants
 // Why: Provide programmatic access to schemas for validation and tooling
 // Related: schemas/*.json, types.ts, validator.ts
-import contextSchemaJson from '../schemas/context.schema.json';
-import profileSchemaJson from '../schemas/profile.schema.json';
-import agentSchemaJson from '../schemas/agent.schema.json';
-import ruleMetadataSchemaJson from '../schemas/rule-metadata.schema.json';
-import toolSchemaJson from '../schemas/tool.schema.json';
-import knowledgeSchemaJson from '../schemas/knowledge.schema.json';
-import memorySchemaJson from '../schemas/memory.schema.json';
-import permissionsSchemaJson from '../schemas/permissions.schema.json';
+import contextSchemaJson from '../schemas/context.schema.json' with { type: 'json' };
+import profileSchemaJson from '../schemas/profile.schema.json' with { type: 'json' };
+import agentSchemaJson from '../schemas/agent.schema.json' with { type: 'json' };
+import ruleMetadataSchemaJson from '../schemas/rule-metadata.schema.json' with { type: 'json' };
+import toolSchemaJson from '../schemas/tool.schema.json' with { type: 'json' };
+import knowledgeSchemaJson from '../schemas/knowledge.schema.json' with { type: 'json' };
+import memorySchemaJson from '../schemas/memory.schema.json' with { type: 'json' };
+import permissionsSchemaJson from '../schemas/permissions.schema.json' with { type: 'json' };
 /**
  * JSON Schema for VERSA context.json
  */
