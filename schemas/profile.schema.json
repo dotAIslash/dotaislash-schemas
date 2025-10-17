@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dotaislash.github.io/schemas/profile.schema.json",
+  "title": "VERSA Profile Configuration",
+  "description": "Tool-specific configuration overrides for VERSA 1.0",
+  "type": "object",
+  "required": ["version", "merge"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "VERSA specification version"
+    },
+    "merge": {
+      "type": "string",
+      "enum": ["deep", "shallow", "replace"],
+      "description": "Merge strategy: 'deep' (recursive merge + array concat), 'shallow' (top-level only), 'replace' (ignore base)"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Profile metadata",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional or override rules for this profile"
+    },
+    "context": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional or override context patterns"
+    },
+    "agents": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional or override agent definitions"
+    },
+    "prompts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional or override prompts"
+    },
+    "tools": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional or override tool configurations"
+    },
+    "knowledge": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Additional or override knowledge sources"
+    },
+    "settings": {
+      "type": "object",
+      "description": "Settings overrides",
+      "properties": {
+        "model": { "type": "string" },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "maxTokens": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "topP": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "streaming": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    },
+    "permissions": {
+      "type": "object",
+      "description": "Permission overrides",
+      "properties": {
+        "files": {
+          "type": "object",
+          "properties": {
+            "read": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "write": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "deny": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "network": {
+          "type": "object",
+          "properties": {
+            "allow": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "deny": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "commands": {
+          "type": "object",
+          "properties": {
+            "allow": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "deny": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "secrets": {
+          "type": "object",
+          "properties": {
+            "bindings": {
+              "type": "object",
+              "additionalProperties": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

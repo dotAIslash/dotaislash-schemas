@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dotaislash.github.io/schemas/tool.schema.json",
+  "title": "VERSA Tool Configuration",
+  "description": "MCP server and API configurations for VERSA 1.0",
+  "type": "object",
+  "required": ["version", "servers"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "VERSA specification version"
+    },
+    "servers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Server name (unique identifier)"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["mcp", "http", "grpc"],
+            "description": "Server type: 'mcp' (Model Context Protocol), 'http' (REST API), 'grpc' (gRPC service)"
+          },
+          "command": {
+            "type": "string",
+            "description": "Command to execute (for MCP servers). Example: 'npx', 'python'"
+          },
+          "args": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Command arguments. Example: ['@modelcontextprotocol/server-linter']"
+          },
+          "env": {
+            "type": "object",
+            "additionalProperties": { "type": "string" },
+            "description": "Environment variables for the server process"
+          },
+          "baseUrl": {
+            "type": "string",
+            "format": "uri",
+            "description": "Base URL for HTTP/gRPC servers. Example: 'https://api.github.com'"
+          },
+          "auth": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["none", "basic", "bearer", "api-key"],
+                "description": "Authentication type"
+              },
+              "tokenEnv": {
+                "type": "string",
+                "description": "Environment variable containing auth token"
+              },
+              "header": {
+                "type": "string",
+                "description": "Custom header name for API key auth"
+              }
+            },
+            "description": "Authentication configuration"
+          },
+          "timeout": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Request timeout in milliseconds"
+          },
+          "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether this server is enabled"
+          }
+        }
+      },
+      "description": "Array of server configurations"
+    }
+  },
+  "additionalProperties": false
+}

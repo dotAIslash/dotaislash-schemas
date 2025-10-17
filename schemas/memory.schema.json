@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dotaislash.github.io/schemas/memory.schema.json",
+  "title": "VERSA Memory Policy",
+  "description": "Memory retention policies for agent sessions in VERSA 1.0",
+  "type": "object",
+  "required": ["version", "retention"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "VERSA specification version"
+    },
+    "retention": {
+      "type": "object",
+      "properties": {
+        "session": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable session-level memory"
+            },
+            "duration": {
+              "type": "string",
+              "pattern": "^\\d+\\s*(minute|hour|day)s?$",
+              "description": "Session memory duration. Examples: '1 hour', '30 minutes', '2 hours'"
+            },
+            "maxSize": {
+              "type": "string",
+              "pattern": "^\\d+\\s*(KB|MB|GB)$",
+              "description": "Maximum memory size. Examples: '10MB', '100MB', '1GB'"
+            }
+          },
+          "description": "Session-level memory (cleared after timeout or manually)"
+        },
+        "project": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable project-level memory"
+            },
+            "duration": {
+              "type": "string",
+              "pattern": "^\\d+\\s*(day|week|month)s?$",
+              "description": "Project memory retention. Examples: '7 days', '30 days', '3 months'"
+            },
+            "maxSize": {
+              "type": "string",
+              "pattern": "^\\d+\\s*(MB|GB)$",
+              "description": "Maximum memory size. Examples: '50MB', '100MB', '500MB'"
+            },
+            "persist": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["decisions", "patterns", "conventions", "preferences", "corrections"]
+              },
+              "description": "What to persist: decisions made, patterns learned, coding conventions, user preferences, error corrections"
+            }
+          },
+          "description": "Project-level memory (persists across sessions, expires after duration)"
+        },
+        "persistent": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false,
+              "description": "Enable persistent memory (never expires, stored permanently)"
+            },
+            "maxSize": {
+              "type": "string",
+              "pattern": "^\\d+\\s*(MB|GB)$",
+              "description": "Maximum memory size"
+            }
+          },
+          "description": "Persistent memory (never expires, requires explicit user consent)"
+        }
+      },
+      "description": "Memory retention policies by scope"
+    }
+  },
+  "additionalProperties": false
+}

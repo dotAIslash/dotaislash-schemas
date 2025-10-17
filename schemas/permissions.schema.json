@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dotaislash.github.io/schemas/permissions.schema.json",
+  "title": "VERSA Permissions",
+  "description": "Security and access control policies for VERSA 1.0",
+  "type": "object",
+  "properties": {
+    "files": {
+      "type": "object",
+      "properties": {
+        "read": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Glob patterns for files the agent can read. Example: ['src/**', 'docs/**']"
+        },
+        "write": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Glob patterns for files the agent can write. Example: ['src/**', 'tests/**']"
+        },
+        "deny": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Glob patterns to explicitly deny (overrides allow). Example: ['*.key', '*.pem', '.env*', 'secrets/*']"
+        }
+      },
+      "description": "File system access permissions"
+    },
+    "network": {
+      "type": "object",
+      "properties": {
+        "allow": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Allowed URLs or domains. Example: ['https://api.openai.com', 'https://api.anthropic.com']"
+        },
+        "deny": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Denied URLs or patterns. Example: ['*'] to deny all by default"
+        }
+      },
+      "description": "Network access permissions"
+    },
+    "commands": {
+      "type": "object",
+      "properties": {
+        "allow": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Allowed shell commands or patterns. Example: ['npm test', 'git status', 'npm run build']"
+        },
+        "deny": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Denied commands or patterns. Example: ['rm -rf', 'sudo', 'dd', 'format']"
+        }
+      },
+      "description": "Command execution permissions"
+    },
+    "secrets": {
+      "type": "object",
+      "properties": {
+        "bindings": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Secret variable bindings. Format: 'VAR_NAME': 'env:ENV_VAR' or 'vault:path/to/secret'"
+        }
+      },
+      "description": "Secret management configuration (never store actual secrets here!)"
+    }
+  },
+  "additionalProperties": false
+}

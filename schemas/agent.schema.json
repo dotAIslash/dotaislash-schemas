@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dotaislash.github.io/schemas/agent.schema.json",
+  "title": "VERSA Agent Definition",
+  "description": "Declarative agent configuration for VERSA 1.0",
+  "type": "object",
+  "required": ["version", "name"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "VERSA specification version"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Agent name (required, non-empty)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of agent's purpose and capabilities"
+    },
+    "model": {
+      "type": "string",
+      "description": "Model identifier for this agent. Example: 'claude-sonnet-4', 'gpt-4-turbo'"
+    },
+    "temperature": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 2,
+      "description": "Sampling temperature (0-2). Lower = more deterministic"
+    },
+    "maxTokens": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Maximum tokens in agent responses"
+    },
+    "tools": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tool configuration files this agent can use"
+    },
+    "rules": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Rule files specific to this agent"
+    },
+    "systemPrompt": {
+      "type": "string",
+      "description": "System prompt defining agent behavior and constraints"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of capabilities: 'code-review', 'documentation', 'testing', etc."
+    }
+  },
+  "additionalProperties": false
+}

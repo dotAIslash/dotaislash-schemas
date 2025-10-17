@@ -46,11 +46,11 @@
 ## 📦 Installation
 
 ```bash
+# Bun (recommended)
+bun add -d @dotaislash/schemas
+
 # npm
 npm install --save-dev @dotaislash/schemas
-
-# yarn
-yarn add -D @dotaislash/schemas
 
 # pnpm
 pnpm add -D @dotaislash/schemas
@@ -114,17 +114,16 @@ Add `$schema` to your JSON files for validation and autocomplete:
 ### Programmatic Validation
 
 ```typescript
-import Ajv from 'ajv';
-import { contextSchema, profileSchema } from '@dotaislash/schemas';
-
-const ajv = new Ajv();
+import { validateContext, validateProfile, validateAgent } from '@dotaislash/schemas';
 
 // Validate context.json
-const validateContext = ajv.compile(contextSchema);
-const valid = validateContext(yourContextData);
+const result = validateContext(yourContextData);
 
-if (!valid) {
-  console.error(validateContext.errors);
+if (!result.valid) {
+  console.error('Validation errors:', result.errors);
+  result.errors.forEach(err => {
+    console.error(`  ${err.instancePath}: ${err.message}`);
+  });
 }
 ```
 
@@ -205,24 +204,21 @@ All schemas include:
 - Examples
 - Pattern validation
 
-### Type Generation
+### TypeScript Types
 
-Generate TypeScript types from schemas:
-
-```bash
-npx json-schema-to-typescript schemas/context.json > types/context.ts
-```
+Import built-in TypeScript types:
 
 ```typescript
-// Generated types
-export interface Context {
-  version: "1.0";
-  rules?: string[];
-  context?: string[];
-  agents?: string[];
-  settings?: Settings;
-  permissions?: Permissions;
-}
+import type { Context, Profile, Agent, Settings, Permissions } from '@dotaislash/schemas';
+
+const config: Context = {
+  version: '1.0',
+  rules: ['rules/style.md'],
+  settings: {
+    model: 'claude-sonnet-4',
+    temperature: 0.7
+  }
+};
 ```
 
 ---
@@ -257,13 +253,13 @@ ajv.addFormat('model-name', customFormats.modelName);
 
 ```bash
 # Run schema tests
-pnpm test
+bun test
 
-# Validate example files
-pnpm test:examples
+# Run with coverage
+bun test --coverage
 
-# Generate type definitions
-pnpm generate:types
+# Run in watch mode
+bun test --watch
 ```
 
 ---
@@ -272,8 +268,7 @@ pnpm generate:types
 
 | Version | Release Date | Status | Breaking Changes |
 |---------|--------------|--------|------------------|
-| 1.0 | Q4 2025 | 🟡 Draft | - |
-| 0.9 | Q3 2025 | 🔴 Deprecated | Multiple |
+| 1.0.0 | 2025-10-17 | ✅ Stable | Initial release |
 
 ---
 
@@ -285,16 +280,16 @@ git clone https://github.com/dotAIslash/dotaislash-schemas.git
 cd dotaislash-schemas
 
 # Install dependencies
-pnpm install
-
-# Validate schemas
-pnpm validate
+bun install
 
 # Run tests
-pnpm test
+bun test
 
 # Build package
-pnpm build
+bun run build
+
+# Lint code
+bun run lint
 ```
 
 ---

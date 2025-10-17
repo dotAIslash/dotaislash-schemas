@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dotaislash.github.io/schemas/knowledge.schema.json",
+  "title": "VERSA Knowledge Configuration",
+  "description": "Knowledge source ingestion configuration for VERSA 1.0",
+  "type": "object",
+  "required": ["version", "sources"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "VERSA specification version"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "url"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["repository", "url", "file", "rss"],
+            "description": "Source type: 'repository' (git repo), 'url' (web page), 'file' (local files), 'rss' (feed)"
+          },
+          "url": {
+            "type": "string",
+            "description": "Source URL or path"
+          },
+          "paths": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Glob patterns for files to ingest from repository. Example: ['docs/**/*.md']"
+          },
+          "selector": {
+            "type": "string",
+            "description": "CSS selector for web page content extraction. Example: 'article.content'"
+          },
+          "refresh": {
+            "type": "string",
+            "enum": ["never", "hourly", "daily", "weekly", "monthly"],
+            "default": "daily",
+            "description": "How often to refresh this source"
+          },
+          "enabled": {
+            "type": "boolean",
+            "default": true,
+            "description": "Whether this source is enabled"
+          }
+        }
+      },
+      "description": "Array of knowledge sources to ingest"
+    },
+    "redaction": {
+      "type": "object",
+      "properties": {
+        "patterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Regex patterns for sensitive data to redact. Example: ['sk-[a-zA-Z0-9]{32}', 'ghp_[a-zA-Z0-9]{36}']"
+        },
+        "fields": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Field names to redact. Example: ['password', 'token', 'secret', 'apiKey']"
+        }
+      },
+      "description": "Redaction rules for sensitive data"
+    }
+  },
+  "additionalProperties": false
+}

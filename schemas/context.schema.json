@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dotaislash.github.io/schemas/context.schema.json",
+  "title": "VERSA Context Configuration",
+  "description": "Base configuration file for VERSA 1.0 - defines project context, rules, and settings for AI agents",
+  "type": "object",
+  "required": ["version"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "enum": ["1.0"],
+      "description": "VERSA specification version - must be '1.0' for this release"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional metadata about the configuration",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Human-readable name for this configuration"
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief description of the project or configuration purpose"
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Tags for categorization (e.g., 'typescript', 'web', 'backend')"
+        },
+        "author": {
+          "type": "string",
+          "description": "Configuration author or maintainer"
+        },
+        "created": {
+          "type": "string",
+          "format": "date",
+          "description": "Creation date in ISO 8601 format"
+        },
+        "updated": {
+          "type": "string",
+          "format": "date",
+          "description": "Last update date in ISO 8601 format"
+        },
+        "license": {
+          "type": "string",
+          "description": "License identifier (e.g., 'MIT', 'Apache-2.0')"
+        }
+      }
+    },
+    "rules": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths to rule files (Markdown) relative to .ai/ folder. Example: ['rules/style.md', 'rules/security.md']"
+    },
+    "context": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Glob patterns for context files. Example: ['src/**/*.ts', 'docs/**/*.md']"
+    },
+    "agents": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths to agent definition files. Example: ['agents/code-reviewer.json']"
+    },
+    "prompts": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths to prompt template files. Example: ['prompts/bug-report.md']"
+    },
+    "tools": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths to tool configuration files. Example: ['tools/mcp-servers.json']"
+    },
+    "knowledge": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths to knowledge source configuration files. Example: ['knowledge/sources.json']"
+    },
+    "settings": {
+      "type": "object",
+      "description": "Model and runtime settings",
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "Model identifier. Example: 'claude-sonnet-4', 'gpt-4-turbo'"
+        },
+        "temperature": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 2,
+          "description": "Sampling temperature (0-2). Lower = more deterministic"
+        },
+        "maxTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum tokens in response"
+        },
+        "topP": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Nucleus sampling parameter"
+        },
+        "streaming": {
+          "type": "boolean",
+          "description": "Enable streaming responses"
+        }
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "description": "Security and access control policies",
+      "properties": {
+        "files": {
+          "type": "object",
+          "properties": {
+            "read": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Glob patterns for readable files. Example: ['src/**', 'docs/**']"
+            },
+            "write": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Glob patterns for writable files. Example: ['src/**']"
+            },
+            "deny": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Glob patterns to deny access. Example: ['*.key', '*.pem', '.env*']"
+            }
+          }
+        },
+        "network": {
+          "type": "object",
+          "properties": {
+            "allow": {
+              "type": "array",
+              "items": { "type": "string", "format": "uri" },
+              "description": "Allowed URLs or domains. Example: ['https://api.openai.com']"
+            },
+            "deny": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Denied URLs or patterns. Example: ['*'] to deny all by default"
+            }
+          }
+        },
+        "commands": {
+          "type": "object",
+          "properties": {
+            "allow": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Allowed shell commands. Example: ['npm test', 'git status']"
+            },
+            "deny": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Denied commands or patterns. Example: ['rm -rf', 'sudo']"
+            }
+          }
+        },
+        "secrets": {
+          "type": "object",
+          "properties": {
+            "bindings": {
+              "type": "object",
+              "additionalProperties": { "type": "string" },
+              "description": "Secret variable bindings. Format: 'VAR_NAME': 'env:ENV_VAR' or 'vault:secret-key'"
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

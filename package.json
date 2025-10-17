@@ -1,0 +1,54 @@
+{
+  "name": "@dotaislash/schemas",
+  "version": "1.0.0",
+  "description": "JSON Schema definitions for VERSA 1.0 - Vendor-neutral Extensible Repo Spec for Agents",
+  "keywords": [
+    "versa",
+    "ai",
+    "agents",
+    "json-schema",
+    "validation",
+    "dotaislash"
+  ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/",
+    "schemas/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "validate": "node dist/cli-validate.js",
+    "lint": "eslint src --ext .ts",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build && npm test"
+  },
+  "dependencies": {
+    "ajv": "^8.12.0",
+    "ajv-formats": "^2.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.31",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.57.0",
+    "typescript": "^5.8.3",
+    "vitest": "^1.2.0"
+  },
+  "engines": {
+    "node": ">=22.16.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dotAIslash/dotaislash-schemas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/dotAIslash/dotaislash-schemas/issues"
+  },
+  "homepage": "https://dotaislash.github.io",
+  "author": "Alphin Tom <alphinctom@gmail.com>"
+}

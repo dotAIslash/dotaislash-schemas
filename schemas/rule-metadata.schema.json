@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dotaislash.github.io/schemas/rule-metadata.schema.json",
+  "title": "VERSA Rule Metadata",
+  "description": "Front matter metadata for Markdown rule files in VERSA 1.0",
+  "type": "object",
+  "properties": {
+    "priority": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"],
+      "default": "medium",
+      "description": "Rule importance level affects loading order and emphasis"
+    },
+    "attach": {
+      "type": "string",
+      "enum": ["always", "on-demand", "never"],
+      "default": "always",
+      "description": "When to include this rule: 'always' (every session), 'on-demand' (when requested), 'never' (reference only)"
+    },
+    "scope": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ],
+      "description": "Scope of applicability: 'global', 'local', or custom scope names. Can be string or array."
+    },
+    "applies_to": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Tags defining when this rule applies. Example: ['typescript', 'react', 'backend']"
+    },
+    "created": {
+      "type": "string",
+      "format": "date",
+      "description": "Creation date in ISO 8601 format"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date",
+      "description": "Last update date in ISO 8601 format"
+    },
+    "author": {
+      "type": "string",
+      "description": "Rule author or maintainer"
+    },
+    "variables": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string", "enum": ["string", "number", "boolean", "array", "object"] },
+          "required": { "type": "boolean", "default": false },
+          "default": { "description": "Default value (any type)" },
+          "enum": {
+            "type": "array",
+            "description": "Allowed values"
+          },
+          "description": { "type": "string" }
+        }
+      },
+      "description": "Variable definitions for template rules"
+    }
+  },
+  "additionalProperties": true
+}
