@@ -44,7 +44,7 @@ export function modelName(value) {
         return false;
     // Allow alphanumeric, hyphens, underscores, dots, and forward slashes
     // Examples: claude-sonnet-4, gpt-4-turbo, gemini-1.5-pro
-    const modelNameRegex = /^[a-zA-Z0-9][a-zA-Z0-9._\/-]*$/;
+    const modelNameRegex = /^[a-zA-Z0-9][a-zA-Z0-9._/-]*$/;
     return modelNameRegex.test(value);
 }
 /**

@@ -1,6 +1,7 @@
 {
   "name": "@dotaislash/schemas",
   "version": "1.0.0",
+  "type": "module",
   "description": "JSON Schema definitions for VERSA 1.0 - Vendor-neutral Extensible Repo Spec for Agents",
   "keywords": [
     "versa",
@@ -22,7 +23,7 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "validate": "node dist/cli-validate.js",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build && npm test"
   },
